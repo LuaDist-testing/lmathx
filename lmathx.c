@@ -1,32 +1,28 @@
 /*
 * lmathx.c
-* C99 math functions for Lua
+* C99 math functions for Lua 5.3
 * Luiz Henrique de Figueiredo <lhf@tecgraf.puc-rio.br>
-* 11 Jun 2014 22:48:52
+* 05 May 2015 20:34:17
 * This code is hereby placed in the public domain.
 */
 
-#define _GNU_SOURCE 1
 #include <math.h>
-#include <stdio.h>
 
 #include "lua.h"
-#include "lualib.h"
 #include "lauxlib.h"
 
-#define A(i)	luaL_checknumber(L,i)
-#define I(i)	luaL_checkint(L,i)
+#define MYNAME		"mathx"
+#define MYVERSION	MYNAME " library for " LUA_VERSION " / May 2015"
 
-#undef abs
-#define	abs	fabs
-#define	gamma	tgamma
+#define A(i)	luaL_checknumber(L,i)
+#define I(i)	((int)luaL_checkinteger(L,i))
 
 #undef PI
 #define PI	(l_mathop(3.141592653589793238462643383279502884))
-#define	rad(x)	((x)*(PI/180.0))
-#define	deg(x)	((x)*(180.0/PI))
+#define	rad(x)	((x)*(PI/l_mathop(180.0)))
+#define	deg(x)	((x)*(l_mathop(180.0)/PI))
 
-static int Lfmax(lua_State *L)
+static int Lfmax(lua_State *L)			/** fmax */
 {
  int i,n=lua_gettop(L);
  lua_Number m=A(1);
@@ -35,7 +31,7 @@ static int Lfmax(lua_State *L)
  return 1;
 }
 
-static int Lfmin(lua_State *L)
+static int Lfmin(lua_State *L)			/** fmin */
 {
  int i,n=lua_gettop(L);
  lua_Number m=A(1);
@@ -44,7 +40,7 @@ static int Lfmin(lua_State *L)
  return 1;
 }
 
-static int Lfrexp(lua_State *L)
+static int Lfrexp(lua_State *L)			/** frexp */
 {
  int e;
  lua_pushnumber(L,l_mathop(frexp)(A(1),&e));
@@ -52,13 +48,13 @@ static int Lfrexp(lua_State *L)
  return 2;
 }
 
-static int Lldexp(lua_State *L)
+static int Lldexp(lua_State *L)			/** ldexp */
 {
  lua_pushnumber(L,l_mathop(ldexp)(A(1),I(2)));
  return 1;
 }
 
-static int Lmodf(lua_State *L)
+static int Lmodf(lua_State *L)			/** modf */
 {
  lua_Number ip;
  lua_Number fp=l_mathop(modf)(A(1),&ip);
@@ -67,333 +63,313 @@ static int Lmodf(lua_State *L)
  return 2;
 }
 
-static int Labs(lua_State *L)
+static int Lfabs(lua_State *L)			/** fabs */
 {
- lua_pushnumber(L,l_mathop(abs)(A(1)));
+ lua_pushnumber(L,l_mathop(fabs)(A(1)));
  return 1;
 }
 
-static int Lacos(lua_State *L)
+static int Lacos(lua_State *L)			/** acos */
 {
  lua_pushnumber(L,l_mathop(acos)(A(1)));
  return 1;
 }
 
-static int Lacosh(lua_State *L)
+static int Lacosh(lua_State *L)			/** acosh */
 {
  lua_pushnumber(L,l_mathop(acosh)(A(1)));
  return 1;
 }
 
-static int Lasin(lua_State *L)
+static int Lasin(lua_State *L)			/** asin */
 {
  lua_pushnumber(L,l_mathop(asin)(A(1)));
  return 1;
 }
 
-static int Lasinh(lua_State *L)
+static int Lasinh(lua_State *L)			/** asinh */
 {
  lua_pushnumber(L,l_mathop(asinh)(A(1)));
  return 1;
 }
 
-static int Latan(lua_State *L)
+static int Latan(lua_State *L)			/** atan */
 {
- lua_pushnumber(L,l_mathop(atan)(A(1)));
+ int n=lua_gettop(L);
+ if (n==1)
+  lua_pushnumber(L,l_mathop(atan)(A(1)));
+ else
+  lua_pushnumber(L,l_mathop(atan2)(A(1),A(2)));
  return 1;
 }
 
-static int Latan2(lua_State *L)
+static int Latan2(lua_State *L)			/** atan2 */
 {
  lua_pushnumber(L,l_mathop(atan2)(A(1),A(2)));
  return 1;
 }
 
-static int Latanh(lua_State *L)
+static int Latanh(lua_State *L)			/** atanh */
 {
  lua_pushnumber(L,l_mathop(atanh)(A(1)));
  return 1;
 }
 
-static int Lcbrt(lua_State *L)
+static int Lcbrt(lua_State *L)			/** cbrt */
 {
  lua_pushnumber(L,l_mathop(cbrt)(A(1)));
  return 1;
 }
 
-static int Lceil(lua_State *L)
+static int Lceil(lua_State *L)			/** ceil */
 {
  lua_pushnumber(L,l_mathop(ceil)(A(1)));
  return 1;
 }
 
-static int Lcopysign(lua_State *L)
+static int Lcopysign(lua_State *L)		/** copysign */
 {
  lua_pushnumber(L,l_mathop(copysign)(A(1),A(2)));
  return 1;
 }
 
-static int Lcos(lua_State *L)
+static int Lcos(lua_State *L)			/** cos */
 {
  lua_pushnumber(L,l_mathop(cos)(A(1)));
  return 1;
 }
 
-static int Lcosh(lua_State *L)
+static int Lcosh(lua_State *L)			/** cosh */
 {
  lua_pushnumber(L,l_mathop(cosh)(A(1)));
  return 1;
 }
 
-static int Ldeg(lua_State *L)
+static int Ldeg(lua_State *L)			/** deg */
 {
  lua_pushnumber(L,deg(A(1)));
  return 1;
 }
 
-static int Lerf(lua_State *L)
+static int Lerf(lua_State *L)			/** erf */
 {
  lua_pushnumber(L,l_mathop(erf)(A(1)));
  return 1;
 }
 
-static int Lerfc(lua_State *L)
+static int Lerfc(lua_State *L)			/** erfc */
 {
  lua_pushnumber(L,l_mathop(erfc)(A(1)));
  return 1;
 }
 
-static int Lexp(lua_State *L)
+static int Lexp(lua_State *L)			/** exp */
 {
  lua_pushnumber(L,l_mathop(exp)(A(1)));
  return 1;
 }
 
-static int Lexp2(lua_State *L)
+static int Lexp2(lua_State *L)			/** exp2 */
 {
  lua_pushnumber(L,l_mathop(exp2)(A(1)));
  return 1;
 }
 
-static int Lexpm1(lua_State *L)
+static int Lexpm1(lua_State *L)			/** expm1 */
 {
  lua_pushnumber(L,l_mathop(expm1)(A(1)));
  return 1;
 }
 
-static int Lfdim(lua_State *L)
+static int Lfdim(lua_State *L)			/** fdim */
 {
  lua_pushnumber(L,l_mathop(fdim)(A(1),A(2)));
  return 1;
 }
 
-static int Lfloor(lua_State *L)
+static int Lfloor(lua_State *L)			/** floor */
 {
  lua_pushnumber(L,l_mathop(floor)(A(1)));
  return 1;
 }
 
-static int Lfma(lua_State *L)
+static int Lfma(lua_State *L)			/** fma */
 {
  lua_pushnumber(L,l_mathop(fma)(A(1),A(2),A(3)));
  return 1;
 }
 
-static int Lfmod(lua_State *L)
+static int Lfmod(lua_State *L)			/** fmod */
 {
  lua_pushnumber(L,l_mathop(fmod)(A(1),A(2)));
  return 1;
 }
 
-static int Lgamma(lua_State *L)
+static int Lgamma(lua_State *L)			/** gamma */
 {
- lua_pushnumber(L,l_mathop(gamma)(A(1)));
+ lua_pushnumber(L,l_mathop(tgamma)(A(1)));
  return 1;
 }
 
-static int Lhypot(lua_State *L)
+static int Lhypot(lua_State *L)			/** hypot */
 {
  lua_pushnumber(L,l_mathop(hypot)(A(1),A(2)));
  return 1;
 }
 
-static int Lisfinite(lua_State *L)
+static int Lisfinite(lua_State *L)		/** isfinite */
 {
  lua_pushboolean(L,isfinite(A(1)));
  return 1;
 }
 
-static int Lisinf(lua_State *L)
+static int Lisinf(lua_State *L)			/** isinf */
 {
  lua_pushboolean(L,isinf(A(1)));
  return 1;
 }
 
-static int Lisnan(lua_State *L)
+static int Lisnan(lua_State *L)			/** isnan */
 {
  lua_pushboolean(L,isnan(A(1)));
  return 1;
 }
 
-static int Lisnormal(lua_State *L)
+static int Lisnormal(lua_State *L)		/** isnormal */
 {
  lua_pushboolean(L,isnormal(A(1)));
  return 1;
 }
 
-static int Lj0(lua_State *L)
-{
- lua_pushnumber(L,j0(A(1)));
- return 1;
-}
-
-static int Lj1(lua_State *L)
-{
- lua_pushnumber(L,j1(A(1)));
- return 1;
-}
-
-static int Ljn(lua_State *L)
-{
- lua_pushnumber(L,jn(I(1),A(2)));
- return 1;
-}
-
-static int Llgamma(lua_State *L)
+static int Llgamma(lua_State *L)		/** lgamma */
 {
  lua_pushnumber(L,l_mathop(lgamma)(A(1)));
  return 1;
 }
 
-static int Llog(lua_State *L)
+static int Llog(lua_State *L)			/** log */
 {
- lua_pushnumber(L,l_mathop(log)(A(1)));
+ int n=lua_gettop(L);
+ if (n==1)
+  lua_pushnumber(L,l_mathop(log)(A(1)));
+ else
+ {
+  lua_Number b=A(2);
+  if (b==10.0)
+   lua_pushnumber(L,l_mathop(log10)(A(1)));
+  else if (b==2.0)
+   lua_pushnumber(L,l_mathop(log2)(A(1)));
+  else
+   lua_pushnumber(L,l_mathop(log)(A(1))/l_mathop(log)(b));
+ }
  return 1;
 }
 
-static int Llog10(lua_State *L)
+static int Llog10(lua_State *L)			/** log10 */
 {
  lua_pushnumber(L,l_mathop(log10)(A(1)));
  return 1;
 }
 
-static int Llog1p(lua_State *L)
+static int Llog1p(lua_State *L)			/** log1p */
 {
  lua_pushnumber(L,l_mathop(log1p)(A(1)));
  return 1;
 }
 
-static int Llog2(lua_State *L)
+static int Llog2(lua_State *L)			/** log2 */
 {
  lua_pushnumber(L,l_mathop(log2)(A(1)));
  return 1;
 }
 
-static int Llogb(lua_State *L)
+static int Llogb(lua_State *L)			/** logb */
 {
  lua_pushnumber(L,l_mathop(logb)(A(1)));
  return 1;
 }
 
-static int Lnearbyint(lua_State *L)
+static int Lnearbyint(lua_State *L)		/** nearbyint */
 {
  lua_pushnumber(L,l_mathop(nearbyint)(A(1)));
  return 1;
 }
 
-static int Lnextafter(lua_State *L)
+static int Lnextafter(lua_State *L)		/** nextafter */
 {
  lua_pushnumber(L,l_mathop(nextafter)(A(1),A(2)));
  return 1;
 }
 
-static int Lpow(lua_State *L)
+static int Lpow(lua_State *L)			/** pow */
 {
  lua_pushnumber(L,l_mathop(pow)(A(1),A(2)));
  return 1;
 }
 
-static int Lrad(lua_State *L)
+static int Lrad(lua_State *L)			/** rad */
 {
  lua_pushnumber(L,rad(A(1)));
  return 1;
 }
 
-static int Lremainder(lua_State *L)
+static int Lremainder(lua_State *L)		/** remainder */
 {
  lua_pushnumber(L,l_mathop(remainder)(A(1),A(2)));
  return 1;
 }
 
-static int Lround(lua_State *L)
+static int Lround(lua_State *L)			/** round */
 {
  lua_pushnumber(L,l_mathop(round)(A(1)));
  return 1;
 }
 
-static int Lscalbn(lua_State *L)
+static int Lscalbn(lua_State *L)		/** scalbn */
 {
  lua_pushnumber(L,l_mathop(scalbn)(A(1),A(2)));
  return 1;
 }
 
-static int Lsin(lua_State *L)
+static int Lsin(lua_State *L)			/** sin */
 {
  lua_pushnumber(L,l_mathop(sin)(A(1)));
  return 1;
 }
 
-static int Lsinh(lua_State *L)
+static int Lsinh(lua_State *L)			/** sinh */
 {
  lua_pushnumber(L,l_mathop(sinh)(A(1)));
  return 1;
 }
 
-static int Lsqrt(lua_State *L)
+static int Lsqrt(lua_State *L)			/** sqrt */
 {
  lua_pushnumber(L,l_mathop(sqrt)(A(1)));
  return 1;
 }
 
-static int Ltan(lua_State *L)
+static int Ltan(lua_State *L)			/** tan */
 {
  lua_pushnumber(L,l_mathop(tan)(A(1)));
  return 1;
 }
 
-static int Ltanh(lua_State *L)
+static int Ltanh(lua_State *L)			/** tanh */
 {
  lua_pushnumber(L,l_mathop(tanh)(A(1)));
  return 1;
 }
 
-static int Ltrunc(lua_State *L)
+static int Ltrunc(lua_State *L)			/** trunc */
 {
  lua_pushnumber(L,l_mathop(trunc)(A(1)));
  return 1;
 }
 
-static int Ly0(lua_State *L)
-{
- lua_pushnumber(L,y0(A(1)));
- return 1;
-}
-
-static int Ly1(lua_State *L)
-{
- lua_pushnumber(L,y1(A(1)));
- return 1;
-}
-
-static int Lyn(lua_State *L)
-{
- lua_pushnumber(L,yn(I(1),A(2)));
- return 1;
-}
-
 static const luaL_Reg R[] =
 {
-	{ "abs",	Labs },
+	{ "fabs",	Lfabs },
 	{ "acos",	Lacos },
 	{ "acosh",	Lacosh },
 	{ "asin",	Lasin },
@@ -425,9 +401,6 @@ static const luaL_Reg R[] =
 	{ "isinf",	Lisinf },
 	{ "isnan",	Lisnan },
 	{ "isnormal",	Lisnormal },
-	{ "j0",	Lj0 },
-	{ "j1",	Lj1 },
-	{ "jn",	Ljn },
 	{ "ldexp",	Lldexp },
 	{ "lgamma",	Llgamma },
 	{ "log",	Llog },
@@ -449,19 +422,17 @@ static const luaL_Reg R[] =
 	{ "tan",	Ltan },
 	{ "tanh",	Ltanh },
 	{ "trunc",	Ltrunc },
-	{ "y0",	Ly0 },
-	{ "y1",	Ly1 },
-	{ "yn",	Lyn },
 	{ NULL,	NULL }
 };
 
 LUALIB_API int luaopen_mathx(lua_State *L)
 {
- if (!lua_getglobal(L,LUA_MATHLIBNAME)) lua_newtable(L);
- luaL_setfuncs(L,R,0);
- lua_pushnumber(L,PI);		lua_setfield(L,-2,"pi");
- lua_pushnumber(L,HUGE_VAL);	lua_setfield(L,-2,"huge");
+ luaL_newlib(L,R);
+ lua_pushliteral(L,"version");			/** version */
+ lua_pushliteral(L,MYVERSION);
+ lua_settable(L,-3);
  lua_pushnumber(L,INFINITY);	lua_setfield(L,-2,"inf");
  lua_pushnumber(L,NAN);		lua_setfield(L,-2,"nan");
+ lua_pushnumber(L,PI);		lua_setfield(L,-2,"pi");
  return 1;
 }

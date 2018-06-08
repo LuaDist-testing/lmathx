@@ -1,7 +1,7 @@
 # makefile for mathx library for Lua
 
 # change these to reflect your Lua installation
-LUA= /tmp/lhf/lua-5.3.0-work3
+LUA= /var/tmp/lhf/lua-5.3.0
 LUAINC= $(LUA)/src
 LUALIB= $(LUA)/src
 LUABIN= $(LUA)/src
@@ -15,7 +15,7 @@ LUABIN= $(LUA)/src
 # probably no need to change anything below here
 CC= gcc
 CFLAGS= -std=c99 $(INCS) $(WARN) -O2 $G
-WARN= -Wall -Wextra
+WARN= -pedantic -Wall -Wextra
 INCS= -I$(LUAINC)
 MAKESO= $(CC) -shared
 #MAKESO= $(CC) -bundle -undefined dynamic_lookup

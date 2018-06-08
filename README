@@ -1,4 +1,6 @@
-This is a complete math library for Lua 5.3 with the functions available in C99.
+This is a complete math library for Lua 5.3 with the functions available
+in C99. It can replace the standard Lua math library, except that mathx
+deals exclusively with floats.
 
 To try the library, just edit Makefile to reflect your installation of Lua and
 then run make. This will build the library and run a simple test. For detailed
@@ -17,17 +19,16 @@ Please send comments, suggestions, and bug reports to lhf@tecgraf.puc-rio.br .
 -------------------------------------------------------------------------------
 
 mathx library:
-abs		cosh		fmod		lgamma		round
-acos		deg		frexp		log		scalbn
-acosh		erf		gamma		log10		sin
-asin		erfc		hypot		log1p		sinh
-asinh		exp		isfinite	log2		sqrt
-atan		exp2		isinf		logb		tan
-atan2		expm1		isnan		modf		tanh
-atanh		fdim		isnormal	nearbyint	trunc
-cbrt		floor		j0		nextafter	y0
-ceil		fma		j1		pow		y1
-copysign	fmax		jn		rad		yn
-cos		fmin		ldexp		remainder
+ acos 		 cosh 		 fmax 		 lgamma 	 remainder 
+ acosh 		 deg 		 fmin 		 log 		 round 
+ asin 		 erf 		 fmod 		 log10 		 scalbn 
+ asinh 		 erfc 		 frexp 		 log1p 		 sin 
+ atan 		 exp 		 gamma 		 log2 		 sinh 
+ atan2 		 exp2 		 hypot 		 logb 		 sqrt 
+ atanh 		 expm1 		 isfinite 	 modf 		 tan 
+ cbrt 		 fabs 		 isinf 		 nearbyint 	 tanh 
+ ceil 		 fdim 		 isnan 		 nextafter 	 trunc 
+ copysign 	 floor 		 isnormal 	 pow 		 version 
+ cos 		 fma 		 ldexp 		 rad 
 
 -------------------------------------------------------------------------------
