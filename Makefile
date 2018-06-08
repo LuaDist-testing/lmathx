@@ -1,7 +1,7 @@
 # makefile for mathx library for Lua
 
 # change these to reflect your Lua installation
-LUA= /var/tmp/lhf/lua-5.3.0
+LUA= /var/tmp/lhf/lua-5.3.1
 LUAINC= $(LUA)/src
 LUALIB= $(LUA)/src
 LUABIN= $(LUA)/src

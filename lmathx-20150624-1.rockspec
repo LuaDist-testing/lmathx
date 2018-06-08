@@ -1,16 +1,16 @@
 -- This file was automatically generated for the LuaDist project.
 
 package="lmathx"
-version="20150505-1"
+version="20150624-1"
 -- LuaDist source
 source = {
-  tag = "20150505-1",
+  tag = "20150624-1",
   url = "git://github.com/LuaDist-testing/lmathx.git"
 }
 -- Original source
 -- source = {
 --    url = "http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/5.3/lmathx.tar.gz",
---    md5="5b5bd22aec169712173d5e39ce759c34",
+--    md5 = "04e03bbec81d4f5305a494fbed6a07a1",
 --    dir = "mathx"
 -- }
 description = {

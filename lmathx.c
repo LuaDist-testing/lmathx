@@ -2,7 +2,7 @@
 * lmathx.c
 * C99 math functions for Lua 5.3
 * Luiz Henrique de Figueiredo <lhf@tecgraf.puc-rio.br>
-* 05 May 2015 20:34:17
+* 24 Jun 2015 09:51:50
 * This code is hereby placed in the public domain.
 */
 
@@ -12,7 +12,7 @@
 #include "lauxlib.h"
 
 #define MYNAME		"mathx"
-#define MYVERSION	MYNAME " library for " LUA_VERSION " / May 2015"
+#define MYVERSION	MYNAME " library for " LUA_VERSION " / Jun 2015"
 
 #define A(i)	luaL_checknumber(L,i)
 #define I(i)	((int)luaL_checkinteger(L,i))
@@ -26,7 +26,7 @@ static int Lfmax(lua_State *L)			/** fmax */
 {
  int i,n=lua_gettop(L);
  lua_Number m=A(1);
- for (i=2; i<=n; i++) m=fmax(m,A(i));
+ for (i=2; i<=n; i++) m=l_mathop(fmax)(m,A(i));
  lua_pushnumber(L,m);
  return 1;
 }
@@ -35,7 +35,7 @@ static int Lfmin(lua_State *L)			/** fmin */
 {
  int i,n=lua_gettop(L);
  lua_Number m=A(1);
- for (i=2; i<=n; i++) m=fmin(m,A(i));
+ for (i=2; i<=n; i++) m=l_mathop(fmin)(m,A(i));
  lua_pushnumber(L,m);
  return 1;
 }
