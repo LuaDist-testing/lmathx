@@ -1,10 +1,10 @@
 -- This file was automatically generated for the LuaDist project.
 
 package="lmathx"
-version="20120430-1"
+version="20120430.51-1"
 -- LuaDist source
 source = {
-  tag = "20120430-1",
+  tag = "20120430.51-1",
   url = "git://github.com/LuaDist-testing/lmathx.git"
 }
 -- Original source
@@ -23,7 +23,7 @@ description = {
    license = "Public domain"
 }
 dependencies = {
-   "lua >= 5.1"
+   "lua ~> 5.1"
 }
 
 build = {
