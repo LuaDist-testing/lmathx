@@ -3,24 +3,27 @@
 ------------------------------------------------------------------------------
 require"mathx"
 
-version="mathx library for ".. _VERSION.." / Apr 2012"
+version="mathx library for ".. _VERSION.." / Jun 2014"
 print(version)
 
 print""
 function f(x)
- print(x,math.isfinite(x),math.isnan(x),math.isnormal(x),math.fpclassify(x))
+ print(x,math.isfinite(x),math.isnan(x),math.isnormal(x))
 end
 
-print("x","finite","nan","normal","fpclassify")
+print("x","finite","nan","normal")
 f(0)
-f(1/-math.infinity)
+f(1/-math.inf)
 f(1/0)
+f(-1/0)
 f(0/0)
-f(math.infinity)
+f(math.inf)
+f(math.huge)
 f(math.nan)
 f(3.45)
 
 print""
+print("x","\t","finite","nan","normal")
 x=1
 while x~=0 do
  y,x=x,x/2
@@ -30,12 +33,12 @@ f(y)
 f(x)
 f(math.nextafter(x,1))
 f(math.nextafter(0,1))
-
+f(math.nextafter(0,-1))
+f(math.nextafter(2,3)-2)
 while x~=0 do
  y,x=x,x/2
 end
 f(y)
-f(x)
 
 print""
 function f(x)
@@ -70,13 +73,10 @@ f(1.7)
 
 print""
 function f(x,y)
-	print(x,y,x%y,math.remainder(x,y))
+	print(x,y,x%y,math.remainder(x,y),math.fmod(x,y))
 end
-print("x","y","%","remainder")
-f(13,3)
-f(13,-3)
-f(-13,3)
-f(-13,-3)
+print("x","y","%","rem","fmod")
+for x=0,10 do f(x,7) end
 
 print""
 print(version)

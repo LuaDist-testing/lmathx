@@ -1,7 +1,7 @@
 # makefile for mathx library for Lua
 
 # change these to reflect your Lua installation
-LUA= /tmp/lhf/lua-5.2.0
+LUA= /tmp/lhf/lua-5.3.0-work3
 LUAINC= $(LUA)/src
 LUALIB= $(LUA)/src
 LUABIN= $(LUA)/src
@@ -14,8 +14,8 @@ LUABIN= $(LUA)/src
 
 # probably no need to change anything below here
 CC= gcc
-CFLAGS= $(INCS) $(WARN) -O2 $G
-WARN= -ansi -pedantic -Wall -Wextra
+CFLAGS= -std=c99 $(INCS) $(WARN) -O2 $G
+WARN= -Wall -Wextra
 INCS= -I$(LUAINC)
 MAKESO= $(CC) -shared
 #MAKESO= $(CC) -bundle -undefined dynamic_lookup
@@ -41,8 +41,8 @@ $T:	$(OBJS)
 clean:
 	rm -f $(OBJS) $T core core.*
 
-doc:	$T
+doc:
 	@echo "$(MYNAME) library:"
-	@$(LUABIN)/lua -e 'for k in pairs(math) do math[k]=nil print(k) end' -l$(MYNAME) -e 'for k in pairs(math) do print(k.."*") end' | sort | column
+	@fgrep '/**' $(MYLIB).c | cut -f2 -d/ | tr -d '*' | sort | column
 
 # eof
