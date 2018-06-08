@@ -17,18 +17,19 @@ Please send comments, suggestions, and bug reports to lhf@tecgraf.puc-rio.br .
 -------------------------------------------------------------------------------
 
 mathx library:
-abs		deg		huge		log2		randomseed
-acos		erf		hypot		logb		remainder
-acosh		erfc		ilogb		max		rint
-asin		exp		infinity	min		round
-asinh		exp2		isfinite	mod		scalbn
-atan		expm1		isinf		modf		signbit
-atan2		fdim		isnan		nan		sin
-atanh		floor		isnormal	nearbyint	sinh
-cbrt		fma		ldexp		nextafter	sqrt
-ceil		fmod		lgamma		pi		tan
-copysign	fpclassify	log		pow		tanh
-cos		frexp		log10		rad		trunc
-cosh		gamma		log1p		random
+abs		deg		frexp		log1p*		random
+acos		erf*		gamma*		log2*		randomseed
+acosh*		erfc*		huge		logb*		remainder*
+asin		exp		hypot*		max		rint*
+asinh*		exp2*		infinity*	min		round*
+atan		expm1*		isfinite*	mod		scalbn*
+atan2		fdim*		isinf*		modf		signbit*
+atanh*		floor		isnan*		nan*		sin
+cbrt*		fma*		isnormal*	nearbyint*	sinh
+ceil		fmax*		ldexp		nextafter*	sqrt
+copysign*	fmin*		lgamma*		pi		tan
+cos		fmod		log		pow		tanh
+cosh		fpclassify*	log10		rad		trunc*
 
+*added in mathx
 -------------------------------------------------------------------------------
