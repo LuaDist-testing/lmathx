@@ -1,0 +1,34 @@
+This code is extends the Lua math library with the functions available in C99.
+
+To try the library, just edit Makefile to reflect your installation of Lua and
+then run make. This will build the library and run a simple test. For detailed
+installation instructions, see
+	http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/install.html
+
+There is no manual: see the summary below and a C99 reference manual, e.g.
+http://www.dinkumware.com/manuals/default.aspx?manual=compleat&page=math.html
+
+Read also test.lua, which shows the library in action.
+
+This code is hereby placed in the public domain.
+
+Please send comments, suggestions, and bug reports to lhf@tecgraf.puc-rio.br .
+
+-------------------------------------------------------------------------------
+
+mathx library:
+abs		deg		huge		log2		randomseed
+acos		erf		hypot		logb		remainder
+acosh		erfc		ilogb		max		rint
+asin		exp		infinity	min		round
+asinh		exp2		isfinite	mod		scalbn
+atan		expm1		isinf		modf		signbit
+atan2		fdim		isnan		nan		sin
+atanh		floor		isnormal	nearbyint	sinh
+cbrt		fma		ldexp		nextafter	sqrt
+ceil		fmod		lgamma		pi		tan
+copysign	fpclassify	log		pow		tanh
+cos		frexp		log10		rad		trunc
+cosh		gamma		log1p		random
+
+-------------------------------------------------------------------------------
