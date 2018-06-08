@@ -2,7 +2,7 @@
 * lmathx.c
 * C99 math functions for Lua
 * Luiz Henrique de Figueiredo <lhf@tecgraf.puc-rio.br>
-* 04 Apr 2010 22:53:32
+* 19 Apr 2012 19:29:09
 * This code is hereby placed in the public domain.
 */
 
@@ -261,7 +261,8 @@ static const luaL_Reg R[] =
 
 LUALIB_API int luaopen_mathx(lua_State *L)
 {
- luaL_register(L,LUA_MATHLIBNAME,R);
+ lua_getglobal(L,LUA_MATHLIBNAME);
+ luaL_setfuncs(L,R,0);
  lua_pushnumber(L,INFINITY);
  lua_setfield(L,-2,"infinity");
  lua_pushnumber(L,NAN);
