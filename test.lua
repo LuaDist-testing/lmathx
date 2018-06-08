@@ -3,7 +3,7 @@
 ------------------------------------------------------------------------------
 require"mathx"
 
-version="mathx library for ".. _VERSION.." / Aug 2009"
+version="mathx library for ".. _VERSION.." / Apr 2012"
 print(version)
 
 print""

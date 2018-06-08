@@ -1,7 +1,7 @@
 # makefile for mathx library for Lua
 
 # change these to reflect your Lua installation
-LUA= /tmp/lhf/lua-5.1.4
+LUA= /tmp/lhf/lua-5.1.5
 LUAINC= $(LUA)/src
 LUALIB= $(LUA)/src
 LUABIN= $(LUA)/src
@@ -15,10 +15,10 @@ LUABIN= $(LUA)/src
 # probably no need to change anything below here
 CC= gcc
 CFLAGS= $(INCS) $(WARN) -O2 $G
-WARN= -ansi -pedantic -Wall
+WARN= -ansi -pedantic -Wall -Wextra
 INCS= -I$(LUAINC)
 MAKESO= $(CC) -shared
-#MAKESO= env MACOSX_DEPLOYMENT_TARGET=10.3 $(CC) -bundle -undefined dynamic_lookup
+#MAKESO= $(CC) -bundle -undefined dynamic_lookup
 
 MYNAME= mathx
 MYLIB= l$(MYNAME)
@@ -44,23 +44,5 @@ clean:
 doc:	$T
 	@echo "$(MYNAME) library:"
 	@$(LUABIN)/lua -e 'for k in pairs(math) do math[k]=nil print(k) end' -l$(MYNAME) -e 'for k in pairs(math) do print(k.."*") end' | sort | column
-
-# distribution
-
-FTP= www:www/ftp/lua/5.1
-F= http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/5.1/$A
-D= $(MYNAME)
-A= $(MYLIB).tar.gz
-TOTAR= Makefile,README,$(MYLIB).c,test.lua
-
-distr:	clean
-	tar zcvf $A -C .. $D/{$(TOTAR)}
-	touch -r $A .stamp
-	scp -p $A $(FTP)
-
-diff:	clean
-	wget -q -N $F
-	tar zxf $A
-	diff $D .
 
 # eof
